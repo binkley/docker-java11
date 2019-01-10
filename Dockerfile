@@ -1,3 +1,4 @@
+# Avoid the "Welcome to Gradle" message every build
 FROM gradle:5.1-jdk11 AS java-pre-build
 USER gradle:gradle
 RUN touch /tmp/release-features.rendered
