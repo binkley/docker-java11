@@ -21,6 +21,7 @@ RUN gradle \
     assemble
 
 FROM openjdk:11-jre-slim AS java-run
+RUN apt-get update && apt-get install --yes
 EXPOSE 8080
 RUN groupadd app
 RUN useradd \
