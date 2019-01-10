@@ -14,7 +14,7 @@ $ ./run-it.sh
 After the service is read, in another terminal:
 
 ```bash
-$ http localhost:8080/actuator health
+$ http localhost:8080/actuator/health
 ```
 
 Note: the container image name is "tmp".
