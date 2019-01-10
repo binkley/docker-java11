@@ -1,7 +1,9 @@
 FROM gradle:5.1-jdk11 AS java-pre-build
+USER gradle:gradle
 RUN touch /tmp/release-features.rendered
 
 FROM gradle:5.1-jdk11 AS java-build
+USER gradle:gradle
 WORKDIR /home/gradle
 COPY --from=java-pre-build --chown=gradle:gradle \
     /tmp/release-features.rendered \
@@ -20,7 +22,13 @@ RUN gradle \
 
 FROM openjdk:11-jre-slim AS java-run
 EXPOSE 8080
-WORKDIR /app
+RUN groupadd app
+RUN useradd \
+    --gid app \
+    --shell /dev/null \
+    app
+USER app:app
+WORKDIR /home/app
 COPY --from=java-build \
     /home/gradle/build/libs/docker-java11-0.0.1-SNAPSHOT.jar \
     ./
