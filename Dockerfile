@@ -1,11 +1,5 @@
-FROM gradle:5.1-jdk11 AS java-pre-build
-RUN touch /tmp/release-features.rendered
-
 FROM gradle:5.1-jdk11 AS java-build
 WORKDIR /home/gradle
-COPY --from=java-pre-build --chown=gradle:gradle \
-    /tmp/release-features.rendered \
-    .gradle/notifications/5.1/
 COPY --chown=gradle:gradle \
     build.gradle \
     gradle.properties \
