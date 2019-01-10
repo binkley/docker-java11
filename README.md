@@ -1,5 +1,6 @@
 # Docker and Java 11
 
+* Gradle 5.1
 * Java 11
 * Spring Boot 2.1
 * Docker
