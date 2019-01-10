@@ -1,7 +1,13 @@
 # Docker and Java 11
 
-## Run
+* Java 11
+* Spring Boot 2.1
+* Docker
+
+## Build and run
 
 ```bash
-$ docker build --quiet --tag tmp . && docker run -it tmp
+$ ./run-it.sh
 ```
+
+Note: the container image name is "tmp".
