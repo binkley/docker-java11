@@ -21,7 +21,7 @@ RUN gradle \
     --warn \
     assemble
 
-FROM openjdk:11-jre-slim AS java-run
+FROM openjdk:11.0.1-jre-slim AS java-run
 RUN apt-get update && apt-get install --yes
 EXPOSE 8080
 RUN groupadd app
