@@ -12,3 +12,10 @@ spring:
     name: 'my-example'
   main:
     banner-mode: 'off'
+
+---
+
+spring:
+  profiles: 'demo'
+  application:
+    name: 'bobs-yer-unkel'
