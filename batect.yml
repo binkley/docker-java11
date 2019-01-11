@@ -1,0 +1,26 @@
+containers:
+  build-env:
+    image: openjdk:11.0.1-jdk
+    volumes:
+      - local: .
+        container: /src
+        options: cached
+      - local: .gradle-cache
+        container: /home/container-user/.gradle
+        options: cached
+    working_directory: /src
+    environment:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    run_as_current_user:
+      enabled: true
+      home_directory: /home/container-user
+
+tasks:
+  build:
+    run:
+      container: build-env
+      command: ./gradlew
+  shell:
+    run:
+      container: build-env
+      command: bash --login
