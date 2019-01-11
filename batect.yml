@@ -11,6 +11,8 @@ containers:
     working_directory: /src
     environment:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
+    ports:
+        - "8080:8080"
     run_as_current_user:
       enabled: true
       home_directory: /home/container-user
@@ -20,6 +22,10 @@ tasks:
     run:
       container: build-env
       command: ./gradlew
+  run:
+    run:
+      container: build-env
+      command: ./gradlew bootRun
   shell:
     run:
       container: build-env
