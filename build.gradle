@@ -56,4 +56,8 @@ tasks {
     bootRun {
         systemProperties = System.properties as Map<String, ?>
     }
+
+    springBoot {
+        buildInfo()
+    }
 }
