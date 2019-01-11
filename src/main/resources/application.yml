@@ -9,6 +9,6 @@ management:
 
 spring:
   application:
-    name: 'lp-lisp'
+    name: 'my-example'
   main:
     banner-mode: 'off'
