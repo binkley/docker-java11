@@ -12,7 +12,7 @@ containers:
     environment:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     ports:
-        - "8080:8080"
+      - "8080:8080"
     run_as_current_user:
       enabled: true
       home_directory: /home/container-user
