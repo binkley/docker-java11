@@ -38,8 +38,4 @@ Note: the container image name is "tmp" when using Docker directly.
 
 ## TODO:
 
-* 
-
-## TODO:
-
 * `./gradlew dockerRun` fails (at least on Windows)
