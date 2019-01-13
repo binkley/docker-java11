@@ -47,6 +47,7 @@ tasks.withType(JavaCompile) {
 tasks {
     wrapper {
         distributionType = Wrapper.DistributionType.ALL
+        gradleVersion = '5.1.1'
     }
 
     clean {
@@ -54,6 +55,7 @@ tasks {
     }
 
     bootRun {
+        // Pass `-Dfoo=bar` flags through to Spring Boot for convenience
         systemProperties = System.properties as Map<String, ?>
     }
 
