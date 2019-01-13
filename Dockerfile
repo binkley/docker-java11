@@ -5,7 +5,6 @@ FROM openjdk:$JAVA_VERSION-jdk AS pre-gradle-setup
 RUN apt-get update && apt-get install --yes
 RUN touch /tmp/release-features.rendered
 
-ARG GRADLE_VERSION
 FROM pre-gradle-setup AS gradle-setup
 ARG GRADLE_VERSION
 RUN : ${GRADLE_VERSION:?No GRADLE_VERSION: Use --build-arg or ./gradlew}
