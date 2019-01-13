@@ -11,12 +11,17 @@
 ```bash
 # Use `Dockerfile`, manually spin up container
 $ ./run-it.sh
+
+```
+
+Or:
+```
+$ ./gradlew dockerRun
 ```
 
 Or:
 
 ```bash
-# Use Batect, automate via Docker Compose
 $ ./batect run -- -Dspring.profiles.active=demo
 ```
 
@@ -30,3 +35,11 @@ $ http localhost:8080/actuator/env/activeProfiles
 ```
 
 Note: the container image name is "tmp" when using Docker directly.
+
+## TODO:
+
+* 
+
+## TODO:
+
+* `./gradlew dockerRun` fails (at least on Windows)
