@@ -31,6 +31,9 @@ dependencies {
 
 sourceCompatibility = 11
 targetCompatibility = 11
+ext {
+    javaVersion = '11.0.1'  // Used by docker task
+}
 
 defaultTasks "build"
 
@@ -62,4 +65,23 @@ tasks {
     springBoot {
         buildInfo()
     }
+}
+
+task dockerBuild(type: Exec) {
+    group = 'Build'
+    description = 'Assembles and tests this project as a local Docker image.'
+    commandLine 'docker', 'build', '.',
+            '--tag', 'tmp',
+            '--build-arg', "GRADLE_VERSION=${tasks.wrapper.gradleVersion}",
+            '--build-arg', "JAVA_VERSIOn=${project.ext['javaVersion']}"
+}
+
+task dockerRun(type: Exec) {
+    group = 'Application'
+    description = 'Runs this project as a local Docker image.'
+    dependsOn dockerBuild
+    commandLine 'docker', 'run',
+            '-it', 'tmp',
+            '--name', 'tmp',
+            '--publish', '8080:8080/tcp'
 }
