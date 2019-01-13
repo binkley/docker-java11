@@ -1,9 +1,14 @@
-# Avoid the "Welcome to Gradle" message every build
-FROM openjdk:11.0.1-jdk AS pre-gradle-setup
+# Error message 'invalid reference format' means you need to pass
+# JAVA_VERSION=... and/or GRADLE_VERSION=... build args
+ARG JAVA_VERSION
+FROM openjdk:$JAVA_VERSION-jdk AS pre-gradle-setup
 RUN apt-get update && apt-get install --yes
 RUN touch /tmp/release-features.rendered
 
+ARG GRADLE_VERSION
 FROM pre-gradle-setup AS gradle-setup
+ARG GRADLE_VERSION
+RUN : ${GRADLE_VERSION:?No GRADLE_VERSION: Use --build-arg or ./gradlew}
 RUN groupadd gradle
 RUN useradd \
     --create-home \
@@ -12,15 +17,16 @@ RUN useradd \
     gradle
 USER gradle:gradle
 WORKDIR /home/gradle
+# Avoid the "Welcome to Gradle" message
 COPY --from=pre-gradle-setup --chown=gradle:gradle \
     /tmp/release-features.rendered \
-    .gradle/notifications/5.1.1/
+    .gradle/notifications/$GRADLE_VERSION/
 COPY --chown=gradle:gradle \
     ./gradlew \
     ./
 COPY --chown=gradle:gradle gradle/ gradle/
 RUN ./gradlew wrapper \
-    --gradle-version 5.1.1 \
+    --gradle-version $GRADLE_VERSION \
     --distribution-type all
 
 FROM gradle-setup AS java-build
@@ -36,9 +42,10 @@ RUN ./gradlew \
     --no-build-cache \
     --no-daemon \
     --warn \
-    assemble
+    build
 
-FROM openjdk:11.0.1-jre-slim AS java-run
+ARG JAVA_VERSION
+FROM openjdk:${JAVA_VERSION}-jre-slim AS java-run
 RUN apt-get update && apt-get install --yes
 EXPOSE 8080
 RUN groupadd app
