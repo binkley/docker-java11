@@ -47,14 +47,15 @@ ARG JAVA_VERSION
 FROM openjdk:${JAVA_VERSION}-jre-slim AS java-run
 RUN apt-get update && apt-get install --yes
 EXPOSE 8080
-RUN groupadd app
+# No default homedir files (like .bashrc)
+RUN rm -rf /etc/skel
 RUN useradd \
-    --gid app \
+    --create-home \
     --shell /dev/null \
     app
 USER app:app
 WORKDIR /home/app
-COPY --from=java-build \
+COPY --chown=app:app --from=java-build \
     /home/gradle/build/libs/docker-java11-0.0.1-SNAPSHOT.jar \
     ./
 CMD java -jar docker-java11-0.0.1-SNAPSHOT.jar
