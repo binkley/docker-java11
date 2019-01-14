@@ -8,10 +8,10 @@ RUN touch /tmp/release-features.rendered
 FROM pre-gradle-setup AS gradle-setup
 ARG GRADLE_VERSION
 RUN : ${GRADLE_VERSION:?No GRADLE_VERSION: Use --build-arg or ./gradlew}
-RUN groupadd gradle
+# No default homedir files (like .bashrc)
+RUN rm -rf /etc/skel
 RUN useradd \
     --create-home \
-    --gid gradle \
     --shell /dev/null \
     gradle
 USER gradle:gradle
