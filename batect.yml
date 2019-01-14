@@ -25,7 +25,9 @@ tasks:
   run:
     run:
       container: build-env
-      command: ./gradlew bootRun
+      command: >-
+        /bin/sh -c './gradlew assemble
+        && java -jar build/libs/docker-java11-0.0.1-SNAPSHOT.jar'
   shell:
     run:
       container: build-env
