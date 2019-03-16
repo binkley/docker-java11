@@ -39,3 +39,4 @@ Note: the container image name is "tmp" when using Docker directly.
 ## TODO:
 
 * `./gradlew dockerRun` fails (at least on Windows)
+* Merge into [binkley/docker](https://github.com/binkley/docker)
