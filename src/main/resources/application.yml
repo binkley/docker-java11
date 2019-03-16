@@ -1,3 +1,8 @@
+logging:
+  level:
+    hm.binkley: 'INFO'
+    root: 'WARN'
+
 management:
   endpoint:
     health:
@@ -9,7 +14,7 @@ management:
 
 spring:
   application:
-    name: 'my-example'
+    name: 'docker-java11'
   main:
     banner-mode: 'off'
 
