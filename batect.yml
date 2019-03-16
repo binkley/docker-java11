@@ -1,0 +1,78 @@
+containers:
+  build-env:
+    image: openjdk:11.0.2-jdk
+    volumes:
+      - local: .
+        container: /src
+        options: cached
+      - local: .gradle-cache
+        container: /home/container-user/.gradle
+        options: cached
+    working_directory: /src
+    ports:
+      - "8080:8080"
+    run_as_current_user:
+      enabled: true
+      home_directory: /home/container-user
+  dev-env:
+    image: openjdk:11.0.2-jdk
+    volumes:
+      - local: .
+        container: /src
+        options: cached
+      - local: .gradle-cache
+        container: /home/container-user/.gradle
+        options: cached
+    working_directory: /src
+#    environment:
+#      JAVA_TOOL_OPTIONS: >-
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+#        -Xdebug
+#        -Dcom.sun.management.jmxremote.port=9010
+#        -Dcom.sun.management.jmxremote.authenticate=false
+#        -Dcom.sun.management.jmxremote.ssl=false
+#        -Dcom.sun.management.jmxremote.rmi.port=1099
+#        -Djava.rmi.server.hostname=boxley.local
+    ports:
+      - "1099:1099"
+      - "5005:5005"
+      - "8080:8080"
+      - "9010:9010"
+    run_as_current_user:
+      enabled: true
+      home_directory: /home/container-user
+
+tasks:
+  build:
+    run:
+      container: build-env
+      command: >-
+        ./gradlew
+        --console=rich
+        --no-build-cache
+        --no-daemon
+        --no-scan
+        --warn
+        build
+  profile:
+    run:
+      container: dev-env
+      command: >-
+        ./gradlew
+        --console=rich
+        --no-build-cache
+        --no-daemon
+        --no-scan
+        --warn
+        bootRun
+        --debug-jvm
+  run:
+    run:
+      container: build-env
+      command: >-
+        /bin/sh -c './gradlew assemble
+        && java -jar build/libs/docker-java11-0-SNAPSHOT.jar'
+  shell:
+    run:
+      container: dev-env
+      command: bash --login

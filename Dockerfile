@@ -39,6 +39,7 @@ COPY --chown=gradle:gradle \
     ./
 COPY --chown=gradle:gradle src/ src/
 RUN ["./gradlew", \
+    "--console=rich", \
     "--no-build-cache", \
     "--no-daemon", \
     "--no-scan", \

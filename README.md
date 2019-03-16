@@ -1,10 +1,10 @@
 # Docker and Java 11
 
-* [Gradle 5.1](https://docs.gradle.org/5.1/release-notes.html)
+* [Gradle 5.2](https://docs.gradle.org/5.2/release-notes.html)
 * [Java 11](https://openjdk.java.net/projects/jdk/11/)
 * [Spring Boot 2.1](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.1-Release-Notes)
 * [Docker](https://blog.docker.com/2018/11/introducing-docker-engine-18-09/)
-* [Batect](https://batect.charleskorn.com)
+* [Batect](https://batect.charleskorn.com) (in progress)
 
 ## Build and run
 
