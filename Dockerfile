@@ -9,6 +9,8 @@ RUN ["rm", "-rf", "/etc/skel"]
 RUN ["touch", "/tmp/release-features.rendered"]
 
 FROM pre-build AS build
+ARG APP_JAR
+RUN : ${APP_JAR:?No APP_JAR: Use --build-arg}
 ARG GRADLE_VERSION
 RUN : ${GRADLE_VERSION:?No GRADLE_VERSION: Use --build-arg}
 RUN ["useradd", \
@@ -37,9 +39,8 @@ RUN ["./gradlew", \
 USER root:root
 WORKDIR /
 RUN ["rm", "/tmp/release-features.rendered"]
-RUN ["cp", \
-    "/home/gradle/build/libs/docker-java11-0-SNAPSHOT.jar", "/tmp/app.jar"]
-RUN ["userdel", "-r", "gradle"]
+RUN cp /home/gradle/$APP_JAR /tmp/app.jar
+RUN ["userdel", "-rf", "gradle"]
 
 ARG JAVA_VERSION
 FROM openjdk:$JAVA_VERSION-jre-slim AS pre-run
