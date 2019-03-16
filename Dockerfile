@@ -1,8 +1,11 @@
 # Error message 'invalid reference format' means you need to pass
 # JAVA_VERSION=... and/or GRADLE_VERSION=... build args
 ARG JAVA_VERSION
-FROM openjdk:$JAVA_VERSION-jdk AS pre-build
-RUN apt-get update && apt-get install --yes && rm -rf /var/lib/apt/lists/*
+FROM openjdk:${JAVA_VERSION}-jdk AS pre-build
+RUN apt-get update \
+    && apt-get install --yes \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 # No default homedir files (like .bashrc)
 RUN ["rm", "-rf", "/etc/skel"]
 # Avoid the "Welcome to Gradle" message
@@ -43,8 +46,11 @@ RUN cp /home/gradle/$APP_JAR /tmp/app.jar
 RUN ["userdel", "-rf", "gradle"]
 
 ARG JAVA_VERSION
-FROM openjdk:$JAVA_VERSION-jre-slim AS pre-run
-RUN apt-get update && apt-get install --yes && rm -rf /var/lib/apt/lists/*
+FROM openjdk:${JAVA_VERSION}-jre-slim AS pre-run
+RUN apt-get update \
+    && apt-get install --yes \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 # No default homedir files (like .bashrc)
 RUN ["rm", "-rf", "/etc/skel"]
 RUN ["useradd", \
