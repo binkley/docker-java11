@@ -53,24 +53,22 @@ tasks.withType(JavaCompile) {
     ]
 }
 
-tasks {
-    wrapper {
-        distributionType = Wrapper.DistributionType.ALL
-        gradleVersion = '5.2.1'
-    }
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = '5.2.1'
+}
 
-    clean {
-        delete "out"
-    }
+clean {
+    delete "out"
+}
 
-    bootRun {
-        // Pass `-Dfoo=bar` flags through to Spring Boot for convenience
-        systemProperties = System.properties as Map<String, ?>
-    }
+bootRun {
+    // Pass `-Dfoo=bar` flags through to Spring Boot for convenience
+    systemProperties = System.properties as Map<String, ?>
+}
 
-    springBoot {
-        buildInfo()
-    }
+springBoot {
+    buildInfo()
 }
 
 task dockerBuild(type: Exec) {
