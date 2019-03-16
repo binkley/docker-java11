@@ -56,6 +56,6 @@ RUN useradd \
 USER app:app
 WORKDIR /home/app
 COPY --chown=app:app --from=java-build \
-    /home/gradle/build/libs/docker-java11-0.0.1-SNAPSHOT.jar \
+    /home/gradle/build/libs/docker-java11-0-SNAPSHOT.jar \
     ./
-CMD java -jar docker-java11-0.0.1-SNAPSHOT.jar
+CMD java -jar docker-java11-0-SNAPSHOT.jar
